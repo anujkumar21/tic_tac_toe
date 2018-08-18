@@ -26,9 +26,7 @@ class PlayGround:
         pygame.display.update()
         self.sign = "X"
         self.tiles = []
-        self.puzzle = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        self.empty = [i for i in range(0, 9) if self.puzzle[i] == 0]
-        self.msg = "Your Turn"
+        self.initialize()
 
     def tic_tac_toe(self):
         self.finish = False
@@ -42,18 +40,14 @@ class PlayGround:
                     self.display_msg("Computer Wins", (255, 0, 0))
                 else:
                     self.display_msg("You Win", (0, 255, 0))
-                sleep(3)
-                self.puzzle = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-                self.empty = [i for i in range(0, 9) if self.puzzle[i] == 0]
-                self.msg = "Your Turn"
+                sleep(2)
+                self.initialize()
 
             self.display_msg(self.msg)
 
             for event in pygame.event.get():
 
                 pos = pygame.mouse.get_pos()
-                row = ((pos[1] - 10) / 100) - 1
-                col = ((pos[0] - 10) / 100) - 1
 
                 if event.type == pygame.QUIT:
                     self.finish = True
@@ -79,10 +73,8 @@ class PlayGround:
             if 0 not in self.puzzle:
                 self.display_msg("!!! DRAW !!!", (0, 255, 0))
                 sleep(2)
-                self.puzzle = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-                self.empty = [i for i in range(0, 9) if self.puzzle[i] == 0]
-                self.msg = "Your Turn"
-                self.sign = "X"
+                self.initialize()
+
             else:
                 if self.sign == "O":
                     self.sign = "X"
@@ -126,6 +118,12 @@ class PlayGround:
         self.screen.blit(text, (100, 450))
         pygame.display.update()
         self.clock.tick(30)
+
+    def initialize(self):
+        self.puzzle = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        self.empty = [i for i in range(0, 9) if self.puzzle[i] == 0]
+        self.msg = "Your Turn"
+        self.sign = "X"
 
 
 if __name__ == '__main__':
