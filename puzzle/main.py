@@ -31,11 +31,9 @@ class PlayGround:
         self.msg = "Your Turn"
 
     def tic_tac_toe(self):
-        print "TIC TAC TOE"
         self.finish = False
-        # self.screen.fill(self.black)
-        # self.draw_board()
         self.display_msg(self.msg)
+
         while not self.finish:
 
             tic_tac_toe = TicTacToe(self.puzzle)
@@ -54,30 +52,25 @@ class PlayGround:
             for event in pygame.event.get():
 
                 pos = pygame.mouse.get_pos()
-
                 row = ((pos[1] - 10) / 100) - 1
                 col = ((pos[0] - 10) / 100) - 1
-                index = (row * 3 + col)
-
-                if index < 0 or index > 8:
-                    index = 0
 
                 if event.type == pygame.QUIT:
                     self.finish = True
 
                 if pos[0] >= 110 and pos[0] <= 410 and pos[1] >= 110 and pos[1] <= 410:
+
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         c_row = ((pos[1] - 10) / 100) - 1
                         c_col = ((pos[0] - 10) / 100) - 1
                         c_index = (c_row * 3 + c_col)
-                        print c_index
 
                         if c_index in self.empty and self.puzzle[c_index] == 0:
                             self.tiles[c_index].text = self.sign
                             self.tiles[c_index].color = self.black
                             self.tiles[c_index].draw()
                             self.empty.remove(c_index)
-                            # print self.empty
+
                             if self.sign == "X":
                                 self.sign = "O"
                                 self.msg = "Computer's Turn"
@@ -93,12 +86,8 @@ class PlayGround:
             else:
                 if self.sign == "O":
                     self.sign = "X"
-                    # self.puzzle[c_index] = 1
-                    # tic_tac_toe = TicTacToe(self.puzzle)
-                    print "BEST MOVE"
                     self.display_msg(self.msg)
                     self.puzzle = tic_tac_toe.best_move()
-                    print self.puzzle
                     self.msg = "Your Turn"
             pygame.display.update()
             self.clock.tick(30)

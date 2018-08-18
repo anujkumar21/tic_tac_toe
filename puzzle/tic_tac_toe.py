@@ -40,11 +40,8 @@ class TicTacToe:
         self.human = True
 
     def best_move(self):
-        print "calculating..."
         root = Node(parent=None, puzzle=deepcopy(self.puzzle), value=0)
         self.depth_first_search(root, 0)
-        # print [n.puzzle for n in root.children if n.value == root.value]
-
         return random.choice([n for n in root.children if n.value == root.value]).puzzle
 
     def depth_first_search(self, node, depth):
@@ -66,19 +63,14 @@ class TicTacToe:
                         min = child.value
                 node.value = min
         else:
-            # print "TERMINATION"
             node.visited = True
             if self.is_win(node.puzzle, 1):
-                # print "WIN 1"
                 node.value = 10 * depth
 
             elif self.is_win(node.puzzle, 2):
-                # print "WIN 2"
                 node.value = -10 * depth
             else:
-                # print "DRAW"
                 node.value = 0
-                # print node
 
     def possible_children(self, node, depth):
 
@@ -104,8 +96,6 @@ class TicTacToe:
         return win
 
     def play(self):
-        print "### TIC TAC TOE ###"
-        print self
         while 0 in self.puzzle and not self.is_win(self.puzzle, 1) and not self.is_win(self.puzzle, 2):
             if self.human:
                 move = input('Your move as {X} (0-8):')
@@ -117,16 +107,3 @@ class TicTacToe:
             else:
                 self.puzzle = self.best_move()
                 self.human = True
-
-            print self
-
-    def __str__(self):
-        lst = []
-        for i in self.puzzle:
-            if i == 1:
-                lst.append('O')
-            elif i == 2:
-                lst.append('X')
-            else:
-                lst.append('.')
-        return "{} {} {}\n{} {} {}\n{} {} {}\n".format(*lst)
